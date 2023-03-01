@@ -2,7 +2,7 @@ import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import React, { useState, useEffect } from "react";
 import { cleanObject, useMount, useDebounce } from "utils";
-import qs from "qs";
+import * as qs from "qs";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -30,7 +30,7 @@ export const ProjectListScreen = () => {
         }
       }
     );
-  }, [useDebounce(param, 2000)]);
+  }, [useDebounce(param, 200)]);
 
   return (
     <div>
