@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 
-export const isFalsy = (value: any) => (value === 0 ? false : !value);
+export const isFalsy = (value: unknown): boolean => {
+  // console.log(value.mayNotExist); // 报错
+  return value === 0 ? false : !value
+};
 
 export const cleanObject = (object: Object) => {
   const result = { ...object };
@@ -21,7 +24,7 @@ export const useMount = (callback: () => void) => {
   }, []);
 };
 
-export const useDebounce = (value: any, delay?: number) => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debounceValue, setDebounceValue] = useState(value);
 
   useEffect(() => {
