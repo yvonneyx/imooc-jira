@@ -10,3 +10,10 @@ style: 不影响代码含义的更改（空白，格式，缺少分号等）
 refactor: 既不修正错误也不增加功能的代码更改（重构）
 perf: 改进性能的代码更改
 test: 添加缺失或更正现有测试
+
+#
+
+```
+npx imooc-jira-tool
+npx msw init public
+```
