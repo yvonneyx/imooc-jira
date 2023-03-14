@@ -9,7 +9,7 @@ interface IdSelectProps
   value: Raw | null | undefined;
   onChange: (value?: number) => void;
   defaultOptionName?: string;
-  options: { name: string; id: number }[];
+  options?: { name: string; id: number }[];
 }
 
 /**
@@ -23,14 +23,14 @@ export const IdSelect = (props: IdSelectProps) => {
   const { value, onChange, defaultOptionName, options, ...restProps } = props;
   return (
     <Select
-      value={toNumber(value)}
+      value={options?.length ? toNumber(value) : 0}
       onChange={(value) => onChange(toNumber(value) || undefined)}
       {...restProps}
     >
       {defaultOptionName ? (
         <Select.Option value={0}>{defaultOptionName}</Select.Option>
       ) : null}
-      {options.map((option) => {
+      {options?.map((option) => {
         return (
           <Select.Option key={option.id} value={option.id}>
             {option.name}
