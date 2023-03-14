@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const isFalsy = (value: unknown): boolean => {
   // console.log(value.mayNotExist); // 报错
@@ -35,3 +35,43 @@ export const useDebounce = <V>(value: V, delay?: number) => {
 
   return debounceValue;
 };
+
+// export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
+//   const oldTitle = document.title
+//   // 页面加载时，oldTitle === 旧title "React App"
+//   // 加载后，oldTitle === 新title 
+
+//   useEffect(() => {
+//     document.title = title
+//   }, [title])
+
+//   useEffect(() => {
+//     return () => {
+//       if (!keepOnUnmount) {
+//         // 如果不指定依赖，读到的就是旧数据【页面加载时数据】
+//         document.title = oldTitle
+//       }
+//     }
+//   }, [])
+// }
+
+
+// useRef 返回一个可变的ref对象， 在组件的整个生命周期内保持不变
+export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
+  const oldTitle = useRef(document.title).current
+  // console.log("加载时 oldTitle,document.title：", oldTitle, document.title);
+
+  useEffect(() => {
+    document.title = title
+    // console.log("加载后：", document.title);
+  }, [title])
+
+  useEffect(() => {
+    return () => {
+      if (!keepOnUnmount) {
+        // console.log("卸载组件后，挂载oldTitle", oldTitle, document.title);
+        document.title = oldTitle
+      }
+    }
+  }, [keepOnUnmount, oldTitle])
+}
