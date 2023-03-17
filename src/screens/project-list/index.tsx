@@ -12,6 +12,7 @@ import { Row } from 'components/lib';
 // ***基本类型或者组建状态，可以放在依赖里；非组件状态的对象，不可以放在依赖里
 
 export const ProjectListScreen = (props: {
+  projectButton: JSX.Element;
   setProjectModalOpen: (isOpen: boolean) => void;
 }) => {
   useDocumentTitle('项目列表', false);
@@ -26,9 +27,7 @@ export const ProjectListScreen = (props: {
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
-        <Button onClick={() => props.setProjectModalOpen(true)}>
-          创建项目
-        </Button>
+        {props.projectButton}
       </Row>
       <SearchPanel
         param={param}
