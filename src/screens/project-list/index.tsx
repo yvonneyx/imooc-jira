@@ -7,7 +7,7 @@ import { Button, Typography } from 'antd';
 import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useProjectModal, useProjectsParam } from './util';
-import { Row } from 'components/lib';
+import { ErrorBox, Row } from 'components/lib';
 
 // ***基本类型或者组建状态，可以放在依赖里；非组件状态的对象，不可以放在依赖里
 
@@ -16,9 +16,7 @@ export const ProjectListScreen = () => {
 
   const [param, setParam] = useProjectsParam();
   const { open } = useProjectModal();
-  const { data: list, isLoading, error, retry } = useProjects(
-    useDebounce(param, 200)
-  );
+  const { data: list, isLoading, error } = useProjects(useDebounce(param, 200));
   const { data: users } = useUsers();
 
   return (
@@ -32,14 +30,11 @@ export const ProjectListScreen = () => {
         setParam={setParam}
         users={users || []}
       ></SearchPanel>
-      {error ? (
-        <Typography.Text type={'danger'}>{error.message}</Typography.Text>
-      ) : null}
+      <ErrorBox error={error} />
       <List
         dataSource={list || []}
         users={users || []}
         loading={isLoading}
-        refresh={retry}
       ></List>
     </Container>
   );
