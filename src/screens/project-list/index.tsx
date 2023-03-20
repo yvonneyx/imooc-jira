@@ -8,13 +8,12 @@ import { useProjects } from 'utils/project';
 import { useUsers } from 'utils/user';
 import { useProjectsParam } from './util';
 import { Row } from 'components/lib';
-
+import { useDispatch } from 'react-redux';
+import { projectListActions } from './project-list.slice';
 // ***基本类型或者组建状态，可以放在依赖里；非组件状态的对象，不可以放在依赖里
 
-export const ProjectListScreen = (props: {
-  projectButton: JSX.Element;
-  setProjectModalOpen: (isOpen: boolean) => void;
-}) => {
+export const ProjectListScreen = () => {
+  const dispatch = useDispatch();
   useDocumentTitle('项目列表', false);
 
   const [param, setParam] = useProjectsParam();
@@ -27,7 +26,9 @@ export const ProjectListScreen = (props: {
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
-        {props.projectButton}
+        <Button onClick={() => dispatch(projectListActions.openProjectModal())}>
+          创建项目
+        </Button>
       </Row>
       <SearchPanel
         param={param}
@@ -42,7 +43,6 @@ export const ProjectListScreen = (props: {
         users={users || []}
         loading={isLoading}
         refresh={retry}
-        setProjectModalOpen={props.setProjectModalOpen}
       ></List>
     </Container>
   );
