@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button, Drawer, Form, Input, Spin } from 'antd';
-import { useProjectModal } from './util';
+import { useProjectModal, useProjectsQueryKey } from './util';
 import { UserSelect } from 'components/user-select';
 import { useAddProject, useEditProject } from 'utils/project';
 import { useForm } from 'antd/lib/form/Form';
@@ -16,7 +16,9 @@ export const ProjectModal = () => {
   } = useProjectModal();
 
   const useMutateProject = editingProject ? useEditProject : useAddProject;
-  const { mutateAsync, isLoading: mutateLoading, error } = useMutateProject();
+  const { mutateAsync, isLoading: mutateLoading, error } = useMutateProject(
+    useProjectsQueryKey()
+  );
 
   const [form] = useForm();
   const onFinish = (values: any) => {
@@ -70,7 +72,7 @@ export const ProjectModal = () => {
             <Form.Item label={'负责人'} name={'personId'}>
               <UserSelect defaultOptionName={'负责人'} />
             </Form.Item>
-            <Form.Item style={{ textAlign: "right" }}>
+            <Form.Item style={{ textAlign: 'right' }}>
               <Button
                 loading={mutateLoading}
                 type={'primary'}

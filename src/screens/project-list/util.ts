@@ -11,6 +11,11 @@ export const useProjectsParam = () => {
 	return [projectsParam, setParam] as const
 }
 
+export const useProjectsQueryKey = () => {
+	const [projectsParam] = useProjectsParam()
+	return ['projects', projectsParam]
+}
+
 export const useProjectModal = () => {
 	const [{ projectCreate }, setProjectCreate] = useUrlQueryParam(['projectCreate'])
 	const [{ editingProjectId }, setEditingProjectId] = useUrlQueryParam(['editingProjectId'])
