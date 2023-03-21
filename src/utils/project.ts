@@ -1,5 +1,4 @@
-import { Project } from "screens/project-list/list";
-import { cleanObject } from "utils";
+import { Project } from "types/project";
 import { useHttp } from "./http";
 import { QueryKey, useMutation, useQuery } from 'react-query';
 import { useAddConfig, useDeleteConfig, useEditConfig } from "./use-optimistic-options";
@@ -7,7 +6,7 @@ import { useAddConfig, useDeleteConfig, useEditConfig } from "./use-optimistic-o
 export const useProjects = (param?: Partial<Project>) => {
 	const client = useHttp();
 
-	return useQuery<Project[]>(["projects", param], () => client('projects', { data: cleanObject(param || {}) }))
+	return useQuery<Project[]>(["projects", param], () => client('projects', { data: param }))
 }
 
 export const useEditProject = (queryKey: QueryKey) => {
